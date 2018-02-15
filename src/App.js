@@ -199,7 +199,7 @@ class Intro extends Component {
                 <h1>Spinning Wheel</h1>
                 <div className="instructions">
 	                <p>If on <span className="imp">desktop</span>, click the wheel to spin it. Hold down your click for as long or as short as you want for different spin speed</p>
-	                <p>On <span className="imp">mobile</span>, spin the wheel by using your finger to drag it from left to right (don\'t tap, swipe)</p>
+	                <p>On <span className="imp">mobile</span>, spin the wheel by using your finger to drag it from left to right (do not tap, swipe)</p>
                 </div>
             </div>
         )
