@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-[Spin the Wheel - version 1.1][https://github.com/HIVERY/spin_the_wheel]
+[Spin the Wheel - version 1.1](https://github.com/HIVERY/spin_the_wheel)
 
 ### Instructions
 
@@ -12,4 +12,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Testing Instructions
 1. `npm test`
 
-### View Live [right here](http://mobiusweb.com.au/spinmywheel/]
+### View Live [right here](http://mobiusweb.com.au/spinmywheel/)
