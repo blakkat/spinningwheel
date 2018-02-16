@@ -126,7 +126,7 @@ class Wheel extends Component {
 //\\wheel Component
 
 
-//Classes created and called within the mouseDown Function
+//Classes created and called within the mouseup Function
 
 //Rotates Wheel. Only works in chrome. If not chrome, spin doesn't happen but other functionality should work.
 class RotateWheel {
