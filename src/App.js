@@ -35,10 +35,10 @@ class Scores extends Component {
     render(){
         return(
             <div className="score">
-                <h3>Recent Answers</h3>
-                <span className="prevans"></span>
                 <h3>Next Number Prediction *drumroll*</h3>
                 <span className="predict"></span>
+                <h3>Recent Answers</h3>
+                <span className="prevans"></span>
                 <h3>Prediction Accuracy</h3>
                 <span className="accuracy"></span>
             </div>
