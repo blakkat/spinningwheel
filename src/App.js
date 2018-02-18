@@ -3,6 +3,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import RotateWheel from './logic/RotateWheel';
+import CurrentAnswerDetector from './logic/CurrentAnswerDetector';
+import NumberPredictor from './logic/NumberPredictor';
+import AccuracyChecker from './logic/AccuracyChecker';
 
 //The complete picture, adding all the components within the full module.
 class spinningWheel extends Component {
@@ -15,37 +19,7 @@ class spinningWheel extends Component {
         )
     }
 }
-//Introduction component
-class Intro extends Component {
-    render(){
-        return (
-            <div className="intro">
-                <div className="error"></div>
-                <h1>Spinning Wheel</h1>
-                <div className="instructions">
-	                <p>If on <span className="imp">desktop</span>, click the wheel to spin it. Hold down your click for as long or as short as you want for different spin speed</p>
-	                <p>On <span className="imp">mobile</span>, spin the wheel by using your finger to drag it from left to right (do not tap, swipe)</p>
-                </div>
-            </div>
-        )
-    }
-}
-//Scores Component
-class Scores extends Component {  
-    render(){
-        return(
-            <div className="score">
-                <h3>Next Number Prediction *drumroll*</h3>
-                <span className="predict"></span>
-                <h3>Recent Answers</h3>
-                <span className="prevans"></span>
-                <h3>Prediction Accuracy</h3>
-                <span className="accuracy"></span>
-            </div>
-        )
-    }
-}
- 
+
 //Wheel Component       
 class Wheel extends Component {
     //set initial state
@@ -83,19 +57,20 @@ class Wheel extends Component {
             mouseupTimestamp = new Date();
             let difference = mouseupTimestamp - mousedownTimestamp;
             //rotates the wheel (chrome only)
-            new RotateWheel(difference, el);
+            RotateWheel(difference, el);
             //works out result 
-            new CurrentAnswerDetector(difference, currentAnswer, selectedList, answerArray);
+            CurrentAnswerDetector(difference, currentAnswer, selectedList, answerArray);
             //number predictor
-            new NumberPredictor(prediction, answerArray, predictionList, answerArray, pred);  
+            NumberPredictor(prediction, answerArray, predictionList, answerArray, pred);  
             //accuray checker
-            new AccuracyChecker(currentAnswer, acc, predictionList, answerArray, accuracy);
+            AccuracyChecker(currentAnswer, acc, predictionList, answerArray, accuracy);
         }
         // once dom is ready, an initial prediction is made and displayed randomly.
         pred.innerHTML = this.state.initialPrediction;
         predictionList.push(this.state.initialPrediction);           
     }
     //\\component did mount
+    
     //render component     
     render() {
         return (
@@ -126,77 +101,39 @@ class Wheel extends Component {
 //\\wheel Component
 
 
-//Classes created and called within the mouseup Function
-
-//Rotates Wheel. Only works in chrome. If not chrome, spin doesn't happen but other functionality should work.
-class RotateWheel {
-    constructor(difference, el) {
-        try {         
-            el.animate([{
-                transform: 'rotate(0deg)'
-            }, {
-                transform: 'rotate(-' + difference + 'deg)'
-            }], {
-                duration: 1000,
-                iterations: 1,
-                easing: 'ease-out'
-            });
-        } catch (e) {
-            document.getElementsByClassName("error")[0].innerHTML = "Your browser doesn't support animate(). No fun spining for you! Try Chrome ;)"
-        }
-        
-        //change the style to stay at the last rotated state of the animation otherwise it will reset. This should occur even if the above animation doesn't work in a browser. 
-        el.style.transform = "rotate(-" + difference + "deg)";
+//Introduction component
+class Intro extends Component {
+    render(){
+        return (
+            <div className="intro">
+                <div className="error"></div>
+                <h1>Spinning Wheel</h1>
+                <div className="instructions">
+	                <p>If on <span className="imp">desktop</span>, click the wheel to spin it. Hold down your click for as long or as short as you want for different spin speed</p>
+	                <p>On <span className="imp">mobile</span>, spin the wheel by using your finger to drag it from left to right (do not tap, swipe)</p>
+                </div>
+            </div>
+        )
     }
 }
 
-//Detects current answer based on position of wheel
-class CurrentAnswerDetector{   
-    constructor(difference, currentAnswer, selectedList, answerArray){
-        const ans = document.getElementsByClassName("prevans")[0];
-        let rotations = Math.floor(difference / 360);
-        let angle = difference - (360 * rotations);
-        let answerLocation = Math.ceil(angle / 36);
-        
-        currentAnswer = selectedList[answerLocation - 1].getAttribute("data-value");  
-        answerArray.push(currentAnswer);
-        setTimeout(() => ans.innerHTML = answerArray, 1000);
-        answerArray = answerArray.filter(n =>  n !== 0 ); 
-
-    }  
-}
-
-//Number Predictor. Predicts the next number by using a moving window and finding the mean. Initial prediction done at random within the mousedown function
-class NumberPredictor{
-    constructor (prediction, answerArray, predictionList, a, pred){
-        let arrWind = answerArray.slice(0,-1).map(Number);
-        //if we only have one answer in the array, our next prediction was set in the initial constructor as a random number so set the prediction as that otherwise, work out the prediction via the moving window.
-        answerArray.length === 1 ? prediction :
-        prediction = arrWind.sort(function(a, b) {
-            return arrWind.filter(v => v === a).length - arrWind.filter(v => v === b).length
-        }).pop() 
-        
-        //set the next prediction from above.
-        pred.innerHTML = prediction;
-        predictionList.push(prediction);
-
+//Scores Component
+class Scores extends Component {  
+    render(){
+        return(
+            <div className="score">
+                <h3>Next Number Prediction *drumroll*</h3>
+                <span className="predict"></span>
+                <h3>Recent Answers</h3>
+                <span className="prevans"></span>
+                <h3>Prediction Accuracy</h3>
+                <span className="accuracy"></span>
+            </div>
+        )
     }
 }
+ 
 
-//Checks the Accuracy of the predictions
-class AccuracyChecker{
-    constructor(currentAnswer, acc, predictionList, answerArray, accuracy){
-        //Here I check whether the currentAnswer and prediciton are the same and push a 1 for yes and 0 for no
-        Number(answerArray.slice(0, answerArray.length).pop()) === predictionList[predictionList.length - 2] ? accuracy.push(1) : accuracy.push(0);
-        
-        //finally I work out the accuracy percentage and display it on the page
-        var accuracyTotal = accuracy.reduce((a, b) =>  a + b)
-        var accuracyPercentage = (accuracyTotal / accuracy.length) * 100;
-         setTimeout(function() {
-           acc.innerHTML = Math.round(accuracyPercentage) + "%";
-        }, 1000);
-    } 
-}
 
 export default spinningWheel;
 
