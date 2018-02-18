@@ -111,6 +111,7 @@ class Intro extends Component {
                 <div className="instructions">
 	                <p>If on <span className="imp">desktop</span>, click the wheel to spin it. Hold down your click for as long or as short as you want for different spin speed</p>
 	                <p>On <span className="imp">mobile</span>, spin the wheel by using your finger to drag it from left to right (do not tap, swipe)</p>
+	                <p><a href="https://github.com/blakkat/spinningwheel" target="_blank" rel="noopener noreferrer">See source on Git</a></p>
                 </div>
             </div>
         )
@@ -132,7 +133,7 @@ class Scores extends Component {
         )
     }
 }
- 
+
 
 
 export default spinningWheel;
