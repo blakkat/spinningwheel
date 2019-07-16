@@ -127,7 +127,7 @@ class Scores extends Component {
                 <span className="predict"></span>
                 <h3>Recent Answers</h3>
                 <span className="prevans"></span>
-                <h3>Prediction Accuracy</h3>
+                <h3>Prediction Accuracy - </h3>
                 <span className="accuracy"></span>
             </div>
         )
