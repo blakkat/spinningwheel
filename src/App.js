@@ -1,4 +1,4 @@
-//Please note, I haven't actually really learned much about react (4 years off raising kids). This project has been bootstrapped using create-react-app to begin. I wrote this in vanilla JS and have attempted to refactor using react. I am sure there is a lot that I can change and I will do so once I learn more about it. Either way, tadaaaaaa. 
+// Please note, I haven't actually really learned much about react (4 years off raising kids). This project has been bootstrapped using create-react-app to begin. I wrote this in vanilla JS and have attempted to refactor using react. I am sure there is a lot that I can change and I will do so once I learn more about it. Either way, tadaaaaaa. 
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
